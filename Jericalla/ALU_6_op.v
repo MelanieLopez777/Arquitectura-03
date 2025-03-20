@@ -1,31 +1,31 @@
-module ALU_6_op 
-(
-	input [3:0] i_u4_op,
-	input [31:0] i_u32_din1,
-	input [31:0] i_u32_din2,
-	output reg [31:0] o_u32_dout,
-	output reg ZF
+//López Galván Melanie Montserrat
+
+`timescale 1ns/1ns
+
+module alu(
+	input wire [3:0] op,
+ 	input wire [31:0] din1_alu,
+ 	input wire [31:0] din2_alu,
+ 	output reg [31:0] result_alu,
+ 	output reg ZF
 );
 
-always @* begin 
-	case(i_u4_op)
-	4'b0000: o_u32_dout = i_u32_din1 & i_u32_din2;
-	4'b0001: o_u32_dout = i_u32_din1 | i_u32_din2;
-	4'b0010: o_u32_dout = i_u32_din1 + i_u32_din2;  
-	4'b0110: o_u32_dout = i_u32_din1 - i_u32_din2;
-	4'b0111: o_u32_dout =(i_u32_din1 < i_u32_din2)?32'd1 : 32'd0;
-	4'b1100: o_u32_dout = ~(i_u32_din1 | i_u32_din2);
-	endcase
-
-
-	if (o_u32_dout == 32'd0)
-		begin 
-			ZF=1'b1;
-		end
-	else
-		begin
-			ZF=1'b0;
-		end
+always @* begin
+ 	case(op)
+ 		4'b0000: result_alu = din1_alu & din2_alu;
+ 		4'b0001: result_alu = din1_alu | din2_alu;
+ 		4'b0010: result_alu = din1_alu + din2_alu;
+ 		4'b0110: result_alu = din1_alu - din2_alu;
+ 		4'b0111: result_alu = (din1_alu < din2_alu)?32'd1:32'd0;
+ 		4'b1100: result_alu = ~(din1_alu | din2_alu);
+ 	endcase
+ 
+ 	if(result_alu == 32'd0)
+ 	begin
+ 		ZF = 1'b1;
+ 	end
+ 	else begin
+ 		ZF = 1'b0;
+ 	end
 end
-	
-endmodule
+ endmodule

@@ -1,22 +1,23 @@
-//López Galván Melanie 
+//López Galván Melanie Montserrat
 
-module RAM_16b 
-(
-	input [4:0] i_u4_dir,
-	input [31:0] i_u32_din,
-	input wEn,
-	output reg [31:0] o_u32_dout
+`timescale 1ns/1ns
+
+module ram(
+	input wire [3:0] address_ram,
+	input wire [31:0] din_ram,
+	input wire wEn,
+	output reg [31:0 ]dout_ram
 );
 
-reg [31:0] mem [0:15];
+reg [31:0] ram_mem [0:15];
 
 always @* begin
-	if (wEn) begin 
-		mem[i_u4_dir] = i_u32_din;
-	end
+	if(wEn == 1'b1) begin
+		ram_mem[address_ram]= din_ram;
+		end
 	else begin
-		o_u32_dout = mem[i_u4_dir];
-	end
+		dout_ram = ram_mem[address_ram];
+		end
 end
 
 endmodule

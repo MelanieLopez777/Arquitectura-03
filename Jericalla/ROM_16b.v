@@ -1,17 +1,18 @@
 //López Galván Melanie Montserrat
 
-module ROM_16b
-(
-	input [3:0] i_u4_dirR1,
-	input [3:0] i_u4_dirR2,
-	output reg [31:0] o_u32_dout1,
-	output reg [31:0] o_u32_dout2
+`timescale 1ns/1ns
+
+module rom(
+	input wire [3:0] address1_rom,
+	input wire [3:0] address2_rom,
+	output reg [31:0] dout1_rom,
+	output reg [31:0] dout2_rom
 );
 
-reg [31:0] mem [0:15];
+reg [31:0] rom_mem [0:15];
 
 always @* begin
-	o_u32_dout1= mem[i_u4_dirR1];
-	o_u32_dout2= mem[i_u4_dirR2];
-end
+		dout1_rom = rom_mem[address1_rom];
+		dout2_rom = rom_mem[address2_rom];
+	end
 endmodule
